@@ -3,33 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silicon Valley Burnout Simulator</title>
+    <title>Retro Retro Snake | Nokia Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-container">
-        <header class="game-header">
-            <div class="score-board">BUGS RESOLVED: <span id="score">0</span></div>
-            <div class="burnout-container">
-                <span>BURNOUT LEVEL:</span>
-                <div class="burnout-bar"><div id="burnoutFill"></div></div>
-            </div>
-        </header>
+    <div class="nokia-shell">
+        <div class="screen-border">
+            <div class="lcd-screen">
+                <header class="status-bar">
+                    <span id="scoreDisplay">SCORE: 0000</span>
+                    <span>HI: 9999</span>
+                </header>
 
-        <!-- The Canvas Game Arena -->
-        <div class="arena-wrapper">
-            <canvas id="gameCanvas"></canvas>
-            <div id="gameOverScreen" class="hidden">
-                <h2>GAME OVER: YOU BURNT OUT!</h2>
-                <p>HR has offered you a free yoga app subscription instead of a raise.</p>
-                <button onclick="resetGame()">File for Workers' Comp (Restart)</button>
+                <canvas id="snakeCanvas" width="400" height="300"></canvas>
+
+                <div id="gameOverOverlay" class="hidden">
+                    <h2>GAME OVER</h2>
+                    <p>Press SPACE to Restart</p>
+                </div>
             </div>
         </div>
-
-        <footer class="controls">
-            <p>👇 Type the matching letter to refactor/destroy the bug before it crashes your database!</p>
-            <div class="keyboard-hint">Press keys on your keyboard matching the falling bugs!</div>
-        </footer>
+        <div class="keypad-hint">Use Arrow Keys or WASD to navigate</div>
     </div>
     <script src="app.js"></script>
 </body>
