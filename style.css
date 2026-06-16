@@ -1,8 +1,7 @@
 :root {
-    --neon-red: #ff3333;
-    --neon-orange: #ff9900;
-    --terminal-bg: #0d0e15;
-    --cyber-blue: #00ffff;
+    --lcd-green: #c7d1b3;
+    --lcd-pixel: #2b3022;
+    --plastic-gray: #4a535a;
 }
 
 * {
@@ -13,8 +12,7 @@
 }
 
 body {
-    background-color: #050508;
-    color: #fff;
+    background-color: #1a1c1e;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,118 +20,75 @@ body {
     overflow: hidden;
 }
 
-.game-container {
-    width: 600px;
-    background: var(--terminal-bg);
-    border: 3px solid var(--cyber-blue);
-    border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+/* Nokia retro housing wrapper */
+.nokia-shell {
+    background: var(--plastic-gray);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.2);
+    border: 4px solid #333;
 }
 
-.game-header {
+.screen-border {
+    background: #222;
+    padding: 15px;
+    border-radius: 8px;
+    border: 2px solid #111;
+}
+
+.lcd-screen {
+    position: relative;
+    background-color: var(--lcd-green);
+    color: var(--lcd-pixel);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+}
+
+.status-bar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
     font-weight: bold;
-}
-
-.score-board {
-    color: var(--cyber-blue);
-    font-size: 1.1rem;
-}
-
-.burnout-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     font-size: 0.9rem;
-}
-
-.burnout-bar {
-    width: 150px;
-    height: 15px;
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 3px;
-    overflow: hidden;
-}
-
-#burnoutFill {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--neon-orange), var(--neon-red));
-    transition: width 0.2s ease;
-}
-
-.arena-wrapper {
-    position: relative;
-    width: 100%;
-    height: 400px;
-    background: #000;
-    border: 2px solid #222;
-    border-radius: 6px;
+    border-bottom: 2px solid var(--lcd-pixel);
+    padding-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 canvas {
-    width: 100%;
-    height: 100%;
     display: block;
+    background-color: var(--lcd-green);
+    border: 1px dashed rgba(43, 48, 34, 0.3);
 }
 
-#gameOverScreen {
+#gameOverOverlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: var(--lcd-green);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    padding: 20px;
+    font-weight: bold;
 }
 
-#gameOverScreen.hidden {
+#gameOverOverlay.hidden {
     display: none !important;
 }
 
-#gameOverScreen h2 {
-    color: var(--neon-red);
-    margin-bottom: 15px;
-    text-shadow: 0 0 10px rgba(255,51,51,0.5);
+#gameOverOverlay h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
 }
 
-#gameOverScreen p {
-    font-size: 0.9rem;
-    color: #aaa;
-    margin-bottom: 25px;
-}
-
-button {
-    background: transparent;
-    border: 2px solid var(--neon-orange);
-    color: var(--neon-orange);
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.2s;
-}
-
-button:hover {
-    background: var(--neon-orange);
-    color: #000;
-    box-shadow: 0 0 15px var(--neon-orange);
-}
-
-.controls {
-    margin-top: 15px;
+.keypad-hint {
     text-align: center;
-    font-size: 0.8rem;
-    color: #777;
-    line-height: 1.4;
+    color: #8b979f;
+    font-size: 0.75rem;
+    margin-top: 15px;
+    text-transform: uppercase;
 }
