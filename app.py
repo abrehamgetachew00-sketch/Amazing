@@ -1,35 +1,33 @@
 from flask import Flask, jsonify, request
-import json
-import os
+import sqlite3
 
 app = Flask(__name__)
-DATA_FILE = "highscores.json"
+DB_NAME = "leaderboard.db"
 
-def load_scores():
-    if not os.path.exists(DATA_FILE):
-        return {"dev_name": "Senior Staff 10x Dev", "high_score": 12}
-    with open(DATA_FILE, "r") as f:
-        return json.load(f)
+def init_db():
+    with sqlite3.connect(DB_NAME) as conn:
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS leaderboard (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_name TEXT NOT NULL,
+                score INTEGER NOT NULL
+            )
+        """)
 
-@app.route('/api/score', methods=['GET', 'POST'])
-def manage_scores():
-    current_data = load_scores()
-    
-    if request.method == 'POST':
-        payload = request.get_json() or {}
-        new_score = payload.get("score", 0)
-        alias = payload.get("alias", "Anonymous Code Monkey")
-        
-        if new_score > current_data["high_score"]:
-            current_data = {"dev_name": alias, "high_score": new_score}
-            with open(DATA_FILE, "w") as f:
-                json.dump(current_data, f)
-            return jsonify({"status": "NEW_RECORD", "data": current_data})
-            
-        return jsonify({"status": "DEFEAT", "msg": "You did not beat corporate records."})
+@app.route('/api/leaderboard', methods=['POST'])
+def save_score():
+    data = request.get_json() or {}
+    name = data.get("player_name", "NokiaGamer")
+    final_score = data.get("score", 0)
 
-    return jsonify(current_data)
+    with sqlite3.connect(DB_NAME) as conn:
+        conn.execute("INSERT INTO leaderboard (player_name, score) VALUES (?, ?)", (name, final_score))
+        cursor = conn.execute("SELECT player_name, score FROM leaderboard ORDER BY score DESC LIMIT 5")
+        top_scores = [{"name": row[0], "score": row[1]} for row in cursor.fetchall()]
+
+    return jsonify({"status": "SUCCESS", "top_records": top_scores})
 
 if __name__ == '__main__':
-    print("Burnout Score Aggregator operational on port 5000...")
+    init_db()
+    print("Snake High-Score Pipeline listening on port 5000...")
     app.run(port=5000, debug=True)
